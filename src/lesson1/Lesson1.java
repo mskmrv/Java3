@@ -6,7 +6,7 @@ import java.util.Arrays;
 public class Lesson1 {
     public static void main(String[] args) {
         //1
-//        testFirstTask();
+        testFirstTask();
         //2
         testSecondTask();
     }
