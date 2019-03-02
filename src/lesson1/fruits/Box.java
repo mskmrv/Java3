@@ -26,7 +26,7 @@ public class Box<T extends Fruit> {
     }
 
     // Нужно реализовать метод интерфейса Comparable?
-    public boolean compare(Box<T> box) {
+    public boolean compare(Box<?> box) {
         return this.getWeight() == box.getWeight();
     }
 
