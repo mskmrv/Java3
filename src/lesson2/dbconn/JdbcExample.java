@@ -8,6 +8,7 @@ public class JdbcExample {
     public static void main(String[] args) {
         changeNick("anya", "anna");
     }
+
     static {
         try {
             Class.forName("org.sqlite.JDBC");
@@ -34,7 +35,7 @@ public class JdbcExample {
     }
 
     public static void changeNick(String oldName, String newName) {
-        try(Connection connection = DriverManager.getConnection(URL)) {
+        try (Connection connection = DriverManager.getConnection(URL)) {
             PreparedStatement preparedStatement = connection.prepareStatement("UPDATE users SET name = ? WHERE name = ?;");
             preparedStatement.setString(1, newName);
             preparedStatement.setString(2, oldName);
