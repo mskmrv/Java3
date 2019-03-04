@@ -19,7 +19,7 @@ public class Box<E extends Fruit> {
 
     public float getWeight() {
 //        return (float) fruitsList.stream().mapToDouble(fruitsList -> fruitsList.getWeight()).sum();
-        
+
         float sum = 0f;
         for (E fruit : fruitsList) {
             sum += fruit.getWeight();
