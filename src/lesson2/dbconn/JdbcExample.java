@@ -5,6 +5,9 @@ import java.sql.*;
 public class JdbcExample {
     private static final String URL = "jdbc:sqlite:database.db";
 
+    public static void main(String[] args) {
+        changeNick("anya", "anna");
+    }
     static {
         try {
             Class.forName("org.sqlite.JDBC");
@@ -28,5 +31,17 @@ public class JdbcExample {
         }
         System.out.println("returned password: " + password);
         return password;
+    }
+
+    public static void changeNick(String oldName, String newName) {
+        try(Connection connection = DriverManager.getConnection(URL)) {
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE users SET name = ? WHERE name = ?;");
+            preparedStatement.setString(1, newName);
+            preparedStatement.setString(2, oldName);
+            preparedStatement.executeUpdate();
+            System.out.println("Name " + oldName + " changed to: " + newName);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
