@@ -1,5 +1,7 @@
 package lesson2.gui;
 
+import lesson2.gui.elements_for_changing_name.DialogWindow;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -21,6 +23,10 @@ public class MainWindow extends JFrame implements MessageSender {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setBounds(200, 200, 500, 500);
 
+        // Добавим контекстное меню
+        JPopupMenu popupMenu = createPopupMenu();
+        ((JComponent) getContentPane()).setComponentPopupMenu(popupMenu);
+
         setLayout(new BorderLayout());   // выбор компоновщика элементов
 
         messageListModel = new DefaultListModel<>();
@@ -32,6 +38,7 @@ public class MainWindow extends JFrame implements MessageSender {
         panel.add(messageList, BorderLayout.SOUTH);
         panel.setBackground(messageList.getBackground());
         scrollPane = new JScrollPane(panel);
+        scrollPane.setInheritsPopupMenu(true); // Добавим контекстное меню
         add(scrollPane, BorderLayout.CENTER);
 
         userList = new JList<>();
@@ -39,6 +46,7 @@ public class MainWindow extends JFrame implements MessageSender {
         userList.setListData(new String[]{"ivan", "petr", "julia"}); // Для простоты, пока фиксированный список имен пользователей
         userList.setPreferredSize(new Dimension(100, 0));
         add(userList, BorderLayout.WEST);
+        userList.setInheritsPopupMenu(true); // Добавим контекстное меню
 
         textField = new JTextField();
         button = new JButton("Отправить");
@@ -96,6 +104,7 @@ public class MainWindow extends JFrame implements MessageSender {
             }
         });
 
+
         setVisible(true);
 
         network = new Network("localhost", 7777, this);
@@ -119,5 +128,22 @@ public class MainWindow extends JFrame implements MessageSender {
                 messageList.ensureIndexIsVisible(messageListModel.size() - 1);
             }
         });
+    }
+
+    private JPopupMenu createPopupMenu() {
+        JPopupMenu popupMenu = new JPopupMenu();
+        JMenuItem changeNameItem = new JMenuItem("Сменить ник");
+        changeNameItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DialogWindow dialogWindow = new DialogWindow(getNetwork());
+            }
+        });
+        popupMenu.add(changeNameItem);
+        return popupMenu;
+    }
+
+    public Network getNetwork() {
+        return network;
     }
 }
