@@ -5,10 +5,6 @@ import java.sql.*;
 public class JdbcExample {
     private static final String URL = "jdbc:sqlite:database.db";
 
-    public static void main(String[] args) {
-        changeNick("anya", "anna");
-    }
-
     static {
         try {
             Class.forName("org.sqlite.JDBC");
