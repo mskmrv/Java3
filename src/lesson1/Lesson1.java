@@ -1,7 +1,7 @@
 package lesson1;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Lesson1 {
     public static void main(String[] args) {
@@ -28,14 +28,14 @@ public class Lesson1 {
     public static void testSecondTask(){
         String[] strArray = getStringArray();
         System.out.println(Arrays.toString(strArray));
-        ArrayList<String> stringList = ArrayUtills.getArrayListFromArray(strArray);
+        List<String> stringList = ArrayUtills.getArrayListFromArray(strArray);
         System.out.println(stringList);
 
         System.out.println("-----");
 
         Integer[] intArray = getIntArray();
         System.out.println(Arrays.toString(intArray));
-        ArrayList<Integer> intList = ArrayUtills.getArrayListFromArray(intArray);
+        List<Integer> intList = ArrayUtills.getArrayListFromArray(intArray);
         System.out.println(intList);
     }
 
