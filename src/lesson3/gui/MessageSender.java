@@ -1,4 +1,4 @@
-package lesson2.gui;
+package lesson3.gui;
 
 /**
  * Интерфейс для взаимодействия класса сети {@link Network}

@@ -1,9 +1,9 @@
-package lesson2;
+package lesson3;
 
 
 
-import lesson2.auth.AuthService;
-import lesson2.auth.AuthServiceImpl;
+import lesson3.auth.AuthService;
+import lesson3.auth.AuthServiceImpl;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

@@ -1,4 +1,4 @@
-package lesson2.gui;
+package lesson3.gui;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;

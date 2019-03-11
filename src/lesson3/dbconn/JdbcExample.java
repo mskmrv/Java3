@@ -1,4 +1,4 @@
-package lesson2.dbconn;
+package lesson3.dbconn;
 
 import java.sql.*;
 

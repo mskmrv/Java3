@@ -1,4 +1,6 @@
-package lesson2;
+package lesson3;
+
+import lesson3.history.HistoryKeeper;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -20,6 +22,8 @@ public class ClientHandler {
     private final ChatServer server;
     private final String username;
     private final Socket socket;
+    private HistoryKeeper historyKeeperUserFrom;
+    private HistoryKeeper historyKeeperUserTo;
 
     public ClientHandler(String username, Socket socket, ChatServer server) throws IOException {
         this.username = username;
@@ -41,6 +45,11 @@ public class ClientHandler {
                             String userTo = matcher.group(1);
                             String message = matcher.group(2);
                             server.sendMessage(userTo, username, message);
+
+                            historyKeeperUserFrom = new HistoryKeeper(msg, username, ClientHandler.this);
+                            historyKeeperUserFrom.write();
+                            historyKeeperUserTo = new HistoryKeeper(msg, userTo, ClientHandler.this);
+                            historyKeeperUserTo.write();
                         }
                     }
                 } catch (IOException e) {

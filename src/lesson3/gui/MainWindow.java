@@ -1,6 +1,6 @@
-package lesson2.gui;
+package lesson3.gui;
 
-import lesson2.gui.elements_for_changing_name.DialogWindow;
+import lesson3.gui.elements_for_changing_name.DialogWindow;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,7 +19,7 @@ public class MainWindow extends JFrame implements MessageSender {
     private Network network;
 
     public MainWindow() {
-        setTitle("Сетевой чат");
+//        setTitle("Сетевой чат");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setBounds(200, 200, 500, 500);
 
@@ -27,7 +27,7 @@ public class MainWindow extends JFrame implements MessageSender {
         JPopupMenu popupMenu = createPopupMenu();
         ((JComponent) getContentPane()).setComponentPopupMenu(popupMenu);
 
-        setLayout(new BorderLayout());   // выбор компоновщика элементов
+        setLayout(new BorderLayout());
 
         messageListModel = new DefaultListModel<>();
         messageList = new JList<>(messageListModel);

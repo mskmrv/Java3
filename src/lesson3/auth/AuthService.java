@@ -1,4 +1,4 @@
-package lesson2.auth;
+package lesson3.auth;
 
 public interface AuthService {
 
