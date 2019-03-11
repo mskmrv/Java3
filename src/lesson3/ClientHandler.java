@@ -46,8 +46,10 @@ public class ClientHandler {
                             String message = matcher.group(2);
                             server.sendMessage(userTo, username, message);
 
+                            // Добавляем сообщения в файл истории отправителя
                             historyKeeperUserFrom = new HistoryKeeper(msg, username, ClientHandler.this);
                             historyKeeperUserFrom.write();
+                            // Добавляем сообщения в файл истории получателя
                             historyKeeperUserTo = new HistoryKeeper(msg, userTo, ClientHandler.this);
                             historyKeeperUserTo.write();
                         }
