@@ -1,6 +1,7 @@
 package lesson3.gui;
 
 import lesson3.gui.elements_for_changing_name.DialogWindow;
+import lesson3.history.HistoryKeeper;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,7 +20,6 @@ public class MainWindow extends JFrame implements MessageSender {
     private Network network;
 
     public MainWindow() {
-//        setTitle("Сетевой чат");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setBounds(200, 200, 500, 500);
 
@@ -30,6 +30,7 @@ public class MainWindow extends JFrame implements MessageSender {
         setLayout(new BorderLayout());
 
         messageListModel = new DefaultListModel<>();
+//        messageListModel.addElement();
         messageList = new JList<>(messageListModel);
         messageList.setCellRenderer(new MessageCellRenderer());
 
@@ -117,6 +118,28 @@ public class MainWindow extends JFrame implements MessageSender {
         }
 
         setTitle("Сетевой чат. Пользователь " + network.getUsername());
+////
+        System.out.println("getNetwork().getUsername(): " + getNetwork().getUsername());
+        Message[] messages = getMessageArray(HistoryKeeper.getHistory(getNetwork().getUsername() + ".txt", 10));
+        for (int i = 0; i < messages.length; i++) {
+            System.out.println(messages[i].getText());
+        }
+
+        System.out.println(HistoryKeeper.getHistory(getNetwork().getUsername() + ".txt", 10));
+        for (Message message : messages) {
+            messageListModel.addElement(message);
+        }
+//        messageListModel.addElement(new Message(null, null, HistoryKeeper.getHistory(getNetwork().getUsername() + ".txt", 10)));
+    }
+
+    private Message[] getMessageArray(String history) {
+        String[] strMessages = history.split("\r\n");
+        Message[] messages = new Message[strMessages.length];
+
+        for (int i = 0; i < messages.length; i++) {
+            messages[i] = new Message(network.getUsername(), null, strMessages[i]);
+        }
+        return null;
     }
 
     @Override
