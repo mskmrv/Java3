@@ -22,8 +22,6 @@ public class ClientHandler {
     private final ChatServer server;
     private final String username;
     private final Socket socket;
-    private HistoryKeeper historyKeeperUserFrom;
-    private HistoryKeeper historyKeeperUserTo;
 
     public ClientHandler(String username, Socket socket, ChatServer server) throws IOException {
         this.username = username;
@@ -47,11 +45,9 @@ public class ClientHandler {
                             server.sendMessage(userTo, username, message);
 
                             // Добавляем сообщения в файл истории отправителя
-                            historyKeeperUserFrom = new HistoryKeeper(msg, username, ClientHandler.this);
-                            historyKeeperUserFrom.write();
+                            HistoryKeeper.write(getUsername() + ".txt", getUsername(), message);
                             // Добавляем сообщения в файл истории получателя
-                            historyKeeperUserTo = new HistoryKeeper(msg, userTo, ClientHandler.this);
-                            historyKeeperUserTo.write();
+                            HistoryKeeper.write(userTo + ".txt", userTo, message);
                         }
                     }
                 } catch (IOException e) {

@@ -1,38 +1,15 @@
 package lesson3.history;
 
-import lesson3.ClientHandler;
-import lesson3.gui.Message;
-
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class HistoryKeeper {
-    private String message;
-    private String fileName;
-    private final ClientHandler clientHandler;
 
-    public HistoryKeeper(String message, String username, ClientHandler clientHandler) {
-        this.message = message;
-        this.fileName = username + ".txt";
-        this.clientHandler = clientHandler;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public String getFileName() {
-        return fileName;
-    }
-
-    public void write() {
-        try (OutputStream out = new BufferedOutputStream(new FileOutputStream(fileName, true))) {
-            String userName = clientHandler.getUsername();
+    public static void write(String fileName, String userName, String message) {
+        try (BufferedWriter out = new BufferedWriter(new FileWriter(fileName, true))) {
             String str = userName + ": " + message + "\r\n";
-            byte[] array = str.getBytes();
-            out.write(array);
+            out.write(str);
             out.flush();
         } catch (FileNotFoundException e) {
             e.printStackTrace();

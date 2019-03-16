@@ -1,6 +1,0 @@
-ivan: /w petr и-п 1
-petr: /w ivan п-и 1
-petr: /w ivan п- и 2
-ivan: /w petr и-п 2
-ivan: /w petr и-п 3
-petr: /w ivan п-и 3
