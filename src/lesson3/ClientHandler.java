@@ -1,5 +1,6 @@
 package lesson3;
 
+import lesson3.gui.Message;
 import lesson3.history.HistoryKeeper;
 
 import java.io.DataInputStream;
@@ -41,13 +42,16 @@ public class ClientHandler {
                         Matcher matcher = MESSAGE_PATTERN.matcher(msg);
                         if (matcher.matches()) {
                             String userTo = matcher.group(1);
-                            String message = matcher.group(2);
-                            server.sendMessage(userTo, username, message);
+                            String messageText = matcher.group(2);
+                            Message message = new Message(username, userTo, messageText);
+//                            server.sendMessage(userTo, username, messageText);
+                            server.sendMessage(message);
 
                             // Добавляем сообщения в файл истории отправителя
-                            HistoryKeeper.saveMassageToHistory(getUsername(), message);
+//                            HistoryKeeper.saveMassageToHistory(getUsername(), messageText);
+                            HistoryKeeper.saveMassageToHistoryFrom(message);
                             // Добавляем сообщения в файл истории получателя
-                            HistoryKeeper.saveMassageToHistory(userTo, message);
+                            HistoryKeeper.saveMassageToHistoryTo(message);
                         }
                     }
                 } catch (IOException e) {

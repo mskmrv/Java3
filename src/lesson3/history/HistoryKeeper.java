@@ -1,5 +1,7 @@
 package lesson3.history;
 
+import lesson3.gui.Message;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +23,39 @@ public class HistoryKeeper {
         }
     }
 
+    public static void saveMassageToHistoryFrom(Message message) {
+        String userName = message.getUserFrom();
+        String messageText = message.getText();
+        String fileName = userName + ".txt";
+        File file = new File(HISTORY_DIR, fileName);
+        try (BufferedWriter out = new BufferedWriter(new FileWriter(file, true))) {
+            String str = userName + ": " + messageText + "\r\n";
+            out.write(str);
+            out.flush();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void saveMassageToHistoryTo(Message message) {
+        String userName = message.getUserTo();
+        String messageText = message.getText();
+        String fileName = userName + ".txt";
+        File file = new File(HISTORY_DIR, fileName);
+        try (BufferedWriter out = new BufferedWriter(new FileWriter(file, true))) {
+//            String str = userName + ": " + messageText + "\r\n";
+            String str = message.getUserFrom() + ": " + messageText + "\r\n";
+            out.write(str);
+            out.flush();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static String getHistory(String fileName, int numberOfRows) {
         List<String> list = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
@@ -30,7 +65,6 @@ public class HistoryKeeper {
                 line = bufferedReader.readLine();
                 if (line != null) {
                     list.add(line);
-//                    sb.append(line).append("\r\n");
                 }
             }
             if (list.size() <= numberOfRows) {

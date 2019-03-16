@@ -1,4 +1,4 @@
-ivan: п-и 1
+petr: п-и 1
+petr: п-и 2
 ivan: и-п 1
 ivan: и-п 2
-ivan: п-и 2
