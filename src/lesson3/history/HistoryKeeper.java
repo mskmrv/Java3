@@ -5,9 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HistoryKeeper {
+    private static final String HISTORY_DIR = "history";
 
-    public static void write(String fileName, String userName, String message) {
-        try (BufferedWriter out = new BufferedWriter(new FileWriter(fileName, true))) {
+    public static void saveMassageToHistory(String userName, String message) {
+        String fileName = userName + ".txt";
+        File file = new File(HISTORY_DIR, fileName);
+        try (BufferedWriter out = new BufferedWriter(new FileWriter(file, true))) {
             String str = userName + ": " + message + "\r\n";
             out.write(str);
             out.flush();

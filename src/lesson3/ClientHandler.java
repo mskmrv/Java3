@@ -45,9 +45,9 @@ public class ClientHandler {
                             server.sendMessage(userTo, username, message);
 
                             // Добавляем сообщения в файл истории отправителя
-                            HistoryKeeper.write(getUsername() + ".txt", getUsername(), message);
+                            HistoryKeeper.saveMassageToHistory(getUsername(), message);
                             // Добавляем сообщения в файл истории получателя
-                            HistoryKeeper.write(userTo + ".txt", userTo, message);
+                            HistoryKeeper.saveMassageToHistory(userTo, message);
                         }
                     }
                 } catch (IOException e) {

@@ -1,0 +1,4 @@
+petr: п-и 1
+petr: и-п 1
+petr: и-п 2
+petr: п-и 2
