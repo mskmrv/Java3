@@ -4,31 +4,21 @@ import lesson3.gui.Message;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class HistoryKeeper {
     private static final String HISTORY_DIR = "history";
-
-    public static void saveMassageToHistory(String userName, String message) {
-        String fileName = userName + ".txt";
-        File file = new File(HISTORY_DIR, fileName);
-        try (BufferedWriter out = new BufferedWriter(new FileWriter(file, true))) {
-            String str = userName + ": " + message + "\r\n";
-            out.write(str);
-            out.flush();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     public static void saveMassageToHistoryFrom(Message message) {
         String userName = message.getUserFrom();
         String messageText = message.getText();
         String fileName = userName + ".txt";
         File file = new File(HISTORY_DIR, fileName);
-        try (BufferedWriter out = new BufferedWriter(new FileWriter(file, true))) {
+        try (BufferedWriter out = new BufferedWriter(new FileWriter(file, true))
+//            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8))
+        ) {
             String str = userName + ": " + messageText + "\r\n";
             out.write(str);
             out.flush();
@@ -56,32 +46,39 @@ public class HistoryKeeper {
         }
     }
 
-    public static String getHistory(String fileName, int numberOfRows) {
-        List<String> list = new ArrayList<>();
+    public static List<Message> getHistory(String fileName, int numberOfRows) {
+        List<String> textMessageList = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName))) {
-            String line = "";
-            while (line != null) {
-                line = bufferedReader.readLine();
-                if (line != null) {
-                    list.add(line);
+        File file = new File(HISTORY_DIR, fileName);
+        try {
+            RandomAccessFile raf = new RandomAccessFile(file, "r");
+            for (long pointer = file.length() - 1; pointer >= 0 && textMessageList.size() < numberOfRows; pointer--) {
+                raf.seek(pointer);
+                char aChar = (char) raf.read();
+                if (aChar != '\n') {
+                    sb.append(aChar);
+                } else if (sb.length() > 1) {
+                    textMessageList.add(sb.reverse().toString());
+                    sb.delete(0, sb.length());
                 }
             }
-            if (list.size() <= numberOfRows) {
-                for (String s : list) {
-                    sb.append(s).append("\r\n");
-                }
-            } else {
-                for (int i = list.size() - numberOfRows; i < list.size(); i++) {
-                    sb.append(list.get(i)).append("\r\n");
-                }
+            if (sb.length() > 1) {
+                textMessageList.add(sb.reverse().toString());
             }
-            return sb.toString();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return sb.toString();
+
+        List<Message> messageList = textMessageList.stream()
+                .map(record -> {
+                    String userFrom = record.substring(0, record.indexOf(" ") - 1);
+                    String textMessage = record.substring(record.indexOf(" ") - 1);
+                    return new Message(userFrom, null, textMessage);
+                }).collect(Collectors.toList());
+
+        Collections.reverse(messageList);
+        return messageList;
     }
 }

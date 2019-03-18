@@ -6,6 +6,7 @@ import lesson3.history.HistoryKeeper;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.List;
 
 public class MainWindow extends JFrame implements MessageSender {
 
@@ -30,7 +31,6 @@ public class MainWindow extends JFrame implements MessageSender {
         setLayout(new BorderLayout());
 
         messageListModel = new DefaultListModel<>();
-//        messageListModel.addElement();
         messageList = new JList<>(messageListModel);
         messageList.setCellRenderer(new MessageCellRenderer());
 
@@ -118,28 +118,11 @@ public class MainWindow extends JFrame implements MessageSender {
         }
 
         setTitle("Сетевой чат. Пользователь " + network.getUsername());
-////
-        System.out.println("getNetwork().getUsername(): " + getNetwork().getUsername());
-        Message[] messages = getMessageArray(HistoryKeeper.getHistory(getNetwork().getUsername() + ".txt", 10));
-        for (int i = 0; i < messages.length; i++) {
-            System.out.println(messages[i].getText());
-        }
 
-        System.out.println(HistoryKeeper.getHistory(getNetwork().getUsername() + ".txt", 10));
-        for (Message message : messages) {
+        List<Message> listMessages = HistoryKeeper.getHistory(network.getUsername() + ".txt", 10);
+        for (Message message : listMessages) {
             messageListModel.addElement(message);
         }
-//        messageListModel.addElement(new Message(null, null, HistoryKeeper.getHistory(getNetwork().getUsername() + ".txt", 10)));
-    }
-
-    private Message[] getMessageArray(String history) {
-        String[] strMessages = history.split("\r\n");
-        Message[] messages = new Message[strMessages.length];
-
-        for (int i = 0; i < messages.length; i++) {
-            messages[i] = new Message(network.getUsername(), null, strMessages[i]);
-        }
-        return null;
     }
 
     @Override
