@@ -1,9 +1,6 @@
-package lesson2.auth;
+package lesson3.auth;
 
-import lesson2.dbconn.JdbcExample;
-
-import java.util.HashMap;
-import java.util.Map;
+import lesson3.dbconn.JdbcExample;
 
 public class AuthServiceImpl implements AuthService {
 

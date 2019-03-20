@@ -1,6 +1,5 @@
-package lesson2.gui;
+package lesson3.gui;
 
-import javax.swing.*;
 import java.io.Closeable;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

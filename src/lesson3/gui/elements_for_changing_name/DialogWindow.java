@@ -1,7 +1,7 @@
-package lesson2.gui.elements_for_changing_name;
+package lesson3.gui.elements_for_changing_name;
 
-import lesson2.dbconn.JdbcExample;
-import lesson2.gui.Network;
+import lesson3.dbconn.JdbcExample;
+import lesson3.gui.Network;
 
 import javax.swing.*;
 import java.awt.*;

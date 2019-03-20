@@ -1,9 +1,10 @@
-package lesson2;
+package lesson3;
 
 
 
-import lesson2.auth.AuthService;
-import lesson2.auth.AuthServiceImpl;
+import lesson3.auth.AuthService;
+import lesson3.auth.AuthServiceImpl;
+import lesson3.gui.Message;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -73,6 +74,18 @@ public class ChatServer {
     }
 
     public void sendMessage(String userTo, String userFrom, String msg) throws IOException {
+        ClientHandler userToClientHandler = clientHandlerMap.get(userTo);
+        if (userToClientHandler != null) {
+            userToClientHandler.sendMessage(userFrom, msg);
+        } else {
+            System.out.printf("User %s not found. Message from %s is lost.%n", userTo, userFrom);
+        }
+    }
+
+    public void sendMessage(Message message) throws IOException {
+        String userTo = message.getUserTo();
+        String userFrom = message.getUserFrom();
+        String msg = message.getText();
         ClientHandler userToClientHandler = clientHandlerMap.get(userTo);
         if (userToClientHandler != null) {
             userToClientHandler.sendMessage(userFrom, msg);

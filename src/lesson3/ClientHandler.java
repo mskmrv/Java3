@@ -1,4 +1,7 @@
-package lesson2;
+package lesson3;
+
+import lesson3.gui.Message;
+import lesson3.history.HistoryKeeper;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -39,8 +42,15 @@ public class ClientHandler {
                         Matcher matcher = MESSAGE_PATTERN.matcher(msg);
                         if (matcher.matches()) {
                             String userTo = matcher.group(1);
-                            String message = matcher.group(2);
-                            server.sendMessage(userTo, username, message);
+                            String messageText = matcher.group(2);
+                            Message message = new Message(username, userTo, messageText);
+//                            server.sendMessage(userTo, username, messageText);
+                            server.sendMessage(message);
+
+                            // Добавляем сообщения в файл истории отправителя
+                            HistoryKeeper.saveMassageToHistoryFrom(message);
+                            // Добавляем сообщения в файл истории получателя
+                            HistoryKeeper.saveMassageToHistoryTo(message);
                         }
                     }
                 } catch (IOException e) {
