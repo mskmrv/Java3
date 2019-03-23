@@ -13,7 +13,7 @@ public class TestEx {
         throw new RuntimeException("Invalid array");
     }
 
-    /*public boolean task2(int[] data) {
+    public boolean task2(int[] data) {
         boolean contains1 = false;
         boolean contains2 = false;
 
@@ -25,9 +25,10 @@ public class TestEx {
                 case 4:
                     contains2 = true;
                     break;
-                    default:
-
+                default:
+                    return false;
             }
         }
-    }*/
+        return contains1 && contains2;
+    }
 }
